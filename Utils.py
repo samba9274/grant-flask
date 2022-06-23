@@ -1,4 +1,5 @@
 from math import sin, cos, sqrt, atan2, radians
+from mysqlx import SSLMode
 import psycopg
 from dotenv import load_dotenv
 import os
@@ -8,7 +9,7 @@ load_dotenv()
 conn_dict = psycopg.conninfo.conninfo_to_dict(os.getenv("DATABASE_URL"))
 
 
-conn = psycopg.connect(**conn_dict)
+conn = psycopg.connect(**conn_dict, sslmode="disable")
 
 mycursor = conn.cursor()
 
