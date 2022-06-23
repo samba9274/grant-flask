@@ -16,11 +16,11 @@ mycursor = conn.cursor()
 def resetDB():
     mycursor.execute("DROP TABLE IF EXISTS images,donations, users")
     conn.commit()
-    mycursor.execute("CREATE TABLE users(userId int unsigned NOT NULL UNIQUE,name varchar(35) NOT NULL,email varchar(50) NOT NULL UNIQUE,password varchar(32) NOT NULL,mobile varchar(10) NOT NULL,latitude float,longitude float,role varchar(10) NOT NULL,PRIMARY KEY (userId))")
+    mycursor.execute("CREATE TABLE users(userId int NOT NULL UNIQUE,name varchar(35) NOT NULL,email varchar(50) NOT NULL UNIQUE,password varchar(32) NOT NULL,mobile varchar(10) NOT NULL,latitude float,longitude float,role varchar(10) NOT NULL,PRIMARY KEY (userId))")
     conn.commit()
-    mycursor.execute("CREATE TABLE donations(donationId int unsigned NOT NULL UNIQUE,donoruserId int unsigned NOT NULL,description varchar(300) NOT NULL,inventory int unsigned NOT NULL,donationDate datetime NOT NULL,recieveruserId int unsigned,acceptationDate datetime,donationStatus char(10) NOT NULL,PRIMARY KEY (donationId),FOREIGN KEY (donoruserId) REFERENCES users(userId),FOREIGN KEY (recieveruserId) REFERENCES users(userId))")
+    mycursor.execute("CREATE TABLE donations(donationId int NOT NULL UNIQUE,donoruserId int NOT NULL,description varchar(300) NOT NULL,inventory int NOT NULL,donationDate timestamp NOT NULL,recieveruserId int,acceptationDate timestamp,donationStatus char(10) NOT NULL,PRIMARY KEY (donationId),FOREIGN KEY (donoruserId) REFERENCES users(userId),FOREIGN KEY (recieveruserId) REFERENCES users(userId))")
     conn.commit()
-    mycursor.execute("CREATE TABLE images(imageId int unsigned NOT NULL UNIQUE,donationId int unsigned NOT NULL,image mediumblob NOT NULL,PRIMARY KEY (imageId),FOREIGN KEY (donationId) REFERENCES donations(donationId))")
+    mycursor.execute("CREATE TABLE images(imageId int NOT NULL UNIQUE,donationId int NOT NULL,image bytea NOT NULL,PRIMARY KEY (imageId),FOREIGN KEY (donationId) REFERENCES donations(donationId))")
     conn.commit()
     mycursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (1,
                                                                                    "Admin",
