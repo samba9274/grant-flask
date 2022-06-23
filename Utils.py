@@ -14,7 +14,7 @@ mycursor = conn.cursor()
 
 
 def resetDB():
-    mycursor.execute("DROP TABLE images,donations, users")
+    mycursor.execute("DROP TABLE IF EXISTS images,donations, users")
     conn.commit()
     mycursor.execute("CREATE TABLE users(userId int unsigned NOT NULL UNIQUE,name varchar(35) NOT NULL,email varchar(50) NOT NULL UNIQUE,password varchar(32) NOT NULL,mobile varchar(10) NOT NULL,latitude float,longitude float,role varchar(10) NOT NULL,PRIMARY KEY (userId))")
     conn.commit()
