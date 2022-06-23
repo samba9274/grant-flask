@@ -14,6 +14,11 @@ CORS(app)
 jwtSecret = "secret"
 
 
+@app.route("/", methods=["GET"])
+def hello():
+    return "Hello World!!!"
+
+
 @app.route("/donations", methods=["POST"])
 def postDonation():
     if request.headers["Authorization"].startswith("Bearer"):
