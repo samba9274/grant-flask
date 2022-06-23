@@ -14,20 +14,26 @@ mycursor = conn.cursor()
 
 
 def getNextDonationId():
-    mycursor = conn.cursor()
-    mycursor.execute("select max(donationId) from donations")
-    r = mycursor.fetchone()
-    if r[0]:
-        return r[0]+1
+    try:
+        mycursor = conn.cursor()
+        mycursor.execute("select max(donationId) from donations")
+        r = mycursor.fetchone()
+        if r[0]:
+            return r[0]+1
+    except:
+        pass
     return 1
 
 
 def getNextImageId():
-    mycursor = conn.cursor()
-    mycursor.execute("select max(imageId) from images")
-    r = mycursor.fetchone()
-    if r[0]:
-        return r[0]+1
+    try:
+        mycursor = conn.cursor()
+        mycursor.execute("select max(imageId) from images")
+        r = mycursor.fetchone()
+        if r[0]:
+            return r[0]+1
+    except:
+        pass
     return 1
 
 
