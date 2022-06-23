@@ -22,6 +22,13 @@ def resetDB():
     conn.commit()
     mycursor.execute("CREATE TABLE images(imageId int unsigned NOT NULL UNIQUE,donationId int unsigned NOT NULL,image mediumblob NOT NULL,PRIMARY KEY (imageId),FOREIGN KEY (donationId) REFERENCES donations(donationId))")
     conn.commit()
+    mycursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (1,
+                                                                                   "Admin",
+                                                                                   "admin@email.com",
+                                                                                   os.getenv(
+                                                                                       "ADMIN_PASSWORD"),
+                                                                                   "0000000000", 0, 0, "ADMIN"))
+    conn.commit()
 
 
 def calcDistance(p1, p2):
