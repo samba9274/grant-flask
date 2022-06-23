@@ -1,12 +1,14 @@
 from Donation import Donation
-import psycopg2
+import psycopg
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+conn_dict = psycopg.conninfo.conninfo_to_dict(os.getenv("DATABASE_URL"))
 
 
-conn = psycopg2.connect(
-    host="ec2-99-80-170-190.eu-west-1.compute.amazonaws.com",
-    database="dbv0gpvc5od45q",
-    user="frkhrhwhzkvmri",
-    password="226d1bf6214abd70d5bb474fb790d84b3676709837180606c3d92a107c6c8d6e")
+conn = psycopg.connect(**conn_dict)
 
 mycursor = conn.cursor()
 
@@ -42,7 +44,7 @@ def insertDonation(donation):
         mycursor.execute("INSERT INTO images VALUES(%s, %s, %s)", (getNextImageId(),
                                                                    donation.donationId,
                                                                    image))
-    mydb.commit()
+    conn.commit()
 
 
 def updateDonation(donation):
@@ -54,7 +56,7 @@ def updateDonation(donation):
                                                                                                                                                                                           donation.acceptationDate,
                                                                                                                                                                                           donation.donationStatus,
                                                                                                                                                                                           donation.donationId))
-    mydb.commit()
+    conn.commit()
 
 
 def getDonationById(id):

@@ -1,11 +1,14 @@
 from User import User
-import psycopg2
+import psycopg
+from dotenv import load_dotenv
+import os
 
-conn = psycopg2.connect(
-    host="ec2-99-80-170-190.eu-west-1.compute.amazonaws.com",
-    database="dbv0gpvc5od45q",
-    user="frkhrhwhzkvmri",
-    password="226d1bf6214abd70d5bb474fb790d84b3676709837180606c3d92a107c6c8d6e")
+load_dotenv()
+
+conn_dict = psycopg.conninfo.conninfo_to_dict(os.getenv("DATABASE_URL"))
+
+
+conn = psycopg.connect(**conn_dict)
 
 mycursor = conn.cursor()
 
@@ -33,7 +36,7 @@ def insertUser(user):
                                                                                    user.latitude,
                                                                                    user.longitude,
                                                                                    user.role))
-    mydb.commit()
+    conn.commit()
 
 
 def getUserByEmail(email):
