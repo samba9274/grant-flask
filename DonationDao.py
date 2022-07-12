@@ -116,7 +116,7 @@ def getAcceptedDonations(id):
 
 
 def getReportedDonations():
-    mycursor.execute('SELECT * FROM donations WHERE donationStatus="Reported"')
+    mycursor.execute('SELECT * FROM donations WHERE donationStatus=%s',tuple(["REPORTED"]))
     donationTuples = mycursor.fetchall()
     donations = [Donation(donation[0], donation[1], donation[2], None, donation[3], donation[4],
                           donation[5], donation[6], donation[7], 0, 0) for donation in donationTuples]
