@@ -78,7 +78,7 @@ def getDonationById(id):
 
 
 def getAllPendingDonations():
-    mycursor.execute('SELECT donations.donationId, donations.donoruserId, donations.description, donations.inventory, donations.donationDate, donations.recieveruserId, donations.acceptationDate, donations.donationStatus, users.latitude, users.longitude FROM donations INNER JOIN users ON donations.donoruserId=users.userId WHERE donations.donationStatus="PENDING"')
+    mycursor.execute('SELECT donations.donationId, donations.donoruserId, donations.description, donations.inventory, donations.donationDate, donations.recieveruserId, donations.acceptationDate, donations.donationStatus, users.latitude, users.longitude FROM donations INNER JOIN users ON donations.donoruserId=users.userId WHERE donations.donationStatus=%s',tuple(["PENDING"]))
     donationTuples = mycursor.fetchall()
     donations = [Donation(donation[0], donation[1], donation[2], None, donation[3],
                           donation[4], donation[5], donation[6], donation[7], donation[8], donation[9]) for donation in donationTuples]
